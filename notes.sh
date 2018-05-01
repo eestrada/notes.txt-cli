@@ -24,6 +24,11 @@ new() {
     xclip -o -selection clipboard > $_tempfile
     $EDITOR $_tempfile
 
+    # TODO: grab first line, strip trailing newline, trim it down to a
+    # reasonable length, translate illegal characters into something safe for
+    # filenames, then use this value as the filename.
+    # head -n 1 $_tempfile | tr -d '\n' | tr 'bad' 'good'
+
     ln $_tempfile $(uuidgen)-datehere.txt
 
     # TODO: How to deal with the hardlink if it fails? Right now we
