@@ -1,4 +1,5 @@
 #!/bin/sh
+# vim: set syntax=sh:
 
 # NOTE: Some inspiration for how to build shell script based CLI tools:
 # * https://git.zx2c4.com/password-store/tree/src/password-store.sh
@@ -34,12 +35,16 @@ abort() {
 }
 
 search() {
-    # TODO: figure out why I can't combine these two expressions into a single
-    # `find` invocation.
-    # find ./ -iname '*.txt' -or -iname '*.md' -exec egrep -nH "${1}" '{}' +
+    # NOTE: search for files and sort them according to how many lines the
+    # search term is present in.
 
-    find ./ -iname '*.txt' -exec egrep -nH "${1}" '{}' +
-    find ./ -iname '*.md' -exec egrep -nH "${1}" '{}' +
+    if [ "$NOTES_DIR" == "$(pwd)" ] ; then
+        _find_dir="./"
+    else
+        _find_dir="$NOTES_DIR"
+    fi
+
+    find "$_find_dir" \( -iname '*.md' -or -iname '*.txt' \) -exec grep -cH "${1}" '{}' + | sort -nr -t ':' -k 2
 }
 
 new() {
@@ -64,6 +69,11 @@ new() {
     return $?
 }
 
+_pwd() {
+    echo "${NOTES_DIR}"
+    echo "${ARCHIVE_DIR}"
+}
+
 PROGRAM="${0##*/}"
 COMMAND="$1"
 
@@ -73,8 +83,10 @@ COMMAND="$1"
 # fi
 
 case "${1}" in
-  "new")    new "${2}" ;;
   "search") search "${2}" ;;
+  "new")    new "${2}" ;;
+  "pwd")    _pwd "${2}" ;;
   *) abort "USAGE: $PROGRAM COMMAND ENTRY" ;;
 esac
 
+exit $?
