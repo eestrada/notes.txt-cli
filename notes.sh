@@ -44,7 +44,8 @@ search() {
         _find_dir="$NOTES_DIR"
     fi
 
-    find "$_find_dir" \( -iname '*.md' -or -iname '*.txt' \) -exec grep -cH "${1}" '{}' + | sort -nr -t ':' -k 2
+    # TODO: don't print files that do NOT contain the search term(s).
+    find "$_find_dir" \( -iname '*.md' -or -iname '*.txt' \) -exec grep -ciH "${1}" '{}' + | sort -nr -t ':' -k 2
 }
 
 new() {
