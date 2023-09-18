@@ -15,15 +15,10 @@ editor.
 
 ## Contributing
 
-All contributions are welcome. <del>First, create a merge request to add
-yourself to the [code dedication file][CODE_DEDICATION.txt] so we have a record
-that we have the right to use your contributed code in this codebase.</del>
-I'll create a process for this when it first comes up.
+All contributions are welcome. By contributing you implicitly agree to releasing your code under the same licensing terms as they rest of this repo.
 
 ## License/Copyright/Copying
 
-This code is made available under the [UNLICENSE](https://unlicense.org/), a
-public domain dedication with fallback [copyfree](http://copyfree.org/) license
-terms for places where public domain is not usable.
+This code is made available under the [0BSD license](https://choosealicense.com/licenses/0bsd/).
 
 
